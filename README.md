@@ -44,7 +44,7 @@ Implemented:
 - JSON response envelopes containing `data` and `error`.
 - Error handlers for HTTP errors, request validation errors, and unexpected exceptions.
 - Basic logging of unexpected server errors.
-- Problem: after the call with assistant ends, data is not being saved in database and didnt had time for resolving it.
+
 
 - **Natural conversational registration, optional-field prompting, correction, read-back confirmation, call completion, and LLM behavior:** not implemented in this repository; but done on (Vapi) external voice-agent configuration.
 - **Dashboard:** A `/dashboard` static mount serves the frontend dashboard to view registered patients.
