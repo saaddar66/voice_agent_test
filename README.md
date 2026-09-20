@@ -44,12 +44,15 @@ Implemented:
 - JSON response envelopes containing `data` and `error`.
 - Error handlers for HTTP errors, request validation errors, and unexpected exceptions.
 - Basic logging of unexpected server errors.
+- Problem: after the call with assistant ends, data is not being saved in database and didnt had time for resolving it.
+
+- **Natural conversational registration, optional-field prompting, correction, read-back confirmation, call completion, and LLM behavior:** not implemented in this repository; but done on (Vapi) external voice-agent configuration.
+- **Dashboard:** A `/dashboard` static mount serves the frontend dashboard to view registered patients.
 
 Partial or external:
 
-- **Natural conversational registration, optional-field prompting, correction, read-back confirmation, call completion, and LLM behavior:** not implemented in this repository; these depend on the external voice-agent configuration.
+
 - **Duplicate patient handling:** not implemented. There is no uniqueness constraint or duplicate-detection query.
-- **Dashboard:** A `/dashboard` static mount serves the frontend dashboard to view registered patients.
 
 ## Tech Stack
 
@@ -300,13 +303,9 @@ Deploy the FastAPI application with an ASGI start command such as `uvicorn main:
 
 ## Live Demo
 
-Replace these placeholders before submission:
-
 Phone Number: `+1 943 500 9356`
 
-API Base URL: `https://your-api-url.onrender.com`
-
-API Documentation: `https://your-api-url.onrender.com/docs`
+Dashboard / API Base URL: `https://voice-agent-test-z1eu.onrender.com/`
 
 ## API Testing
 
@@ -387,4 +386,4 @@ The following are future improvements and are not currently implemented:
 | Persistent database | **Implemented** with PostgreSQL and async SQLAlchemy |
 | REST API | **Implemented** with FastAPI patient CRUD endpoints |
 | Error handling | **Implemented** with global API handlers and Vapi tool error results |
-| Deployment | **Partial**; deployment architecture is defined, but no live deployment or URL is included |
+| Deployment | **Implemented**; application is deployed live on Render |
