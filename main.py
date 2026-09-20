@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Request, status
 from fastapi.exceptions import RequestValidationError
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -32,14 +32,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return {
-        "data": {
-            "message": "Welcome to the Patient Registration System API",
-            "docs": "/docs",
-            "status": "online"
-        },
-        "error": None
-    }
+    return FileResponse("frontend/index.html")
 
 app.include_router(patients_router)
 app.include_router(vapi_router)
