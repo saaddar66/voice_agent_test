@@ -49,7 +49,7 @@ Partial or external:
 
 - **Natural conversational registration, optional-field prompting, correction, read-back confirmation, call completion, and LLM behavior:** not implemented in this repository; these depend on the external voice-agent configuration.
 - **Duplicate patient handling:** not implemented. There is no uniqueness constraint or duplicate-detection query.
-- **Dashboard:** a `/dashboard` static mount is configured, but no `frontend/` directory is included.
+- **Dashboard:** A `/dashboard` static mount serves the frontend dashboard to view registered patients.
 
 ## Tech Stack
 
@@ -72,7 +72,7 @@ Partial or external:
 | `models.py` | Defines the `Patient` SQLAlchemy model and `SexEnum`. |
 | `schemas.py` | Defines response envelopes and patient create, update, and response schemas with Pydantic validators. |
 | `crud.py` | Implements patient queries, creation, update, and soft deletion. |
-| `routers/pateints.py` | Defines the `/patients` REST endpoints. The filename currently does not match the `routers.patients` import in `main.py`. |
+| `routers/patients.py` | Defines the `/patients` REST endpoints. |
 | `routers/vapi.py` | Defines the `/vapi/function-webhook` endpoint and handles the Vapi `create_patient` tool. |
 
 ## Patient Data Model
@@ -223,7 +223,7 @@ The repository does not contain the voice prompt or agent configuration, so call
 
 ## Setup and Installation
 
-The repository does not currently include `requirements.txt` or a packaging file. From PowerShell on Windows:
+From PowerShell on Windows:
 
 1. Clone and enter the repository:
 
@@ -239,10 +239,10 @@ The repository does not currently include `requirements.txt` or a packaging file
    .\.venv\Scripts\Activate.ps1
    ```
 
-3. Install the packages imported by the application:
+3. Install the application dependencies:
 
    ```powershell
-  python -m pip install fastapi uvicorn sqlalchemy asyncpg pydantic python-dotenv
+   python -m pip install -r requirements.txt
    ```
 
 4. Create the local environment file from the template and edit it with your PostgreSQL details:
@@ -256,9 +256,7 @@ The repository does not currently include `requirements.txt` or a packaging file
 
 5. Ensure PostgreSQL is running and the target database exists. The application creates the `patients` table on startup with SQLAlchemy metadata; it does not create the PostgreSQL database itself or run migrations.
 
-6. Fix the current router filename/import mismatch before starting: rename `routers\pateints.py` to `routers\patients.py`, or change the import in `main.py` to match the existing filename. The current source imports `routers.patients` and therefore does not start as checked out.
-
-7. Start the FastAPI server:
+6. Start the FastAPI server:
 
    ```powershell
    python -m uvicorn main:app --reload
@@ -276,7 +274,7 @@ If `DATABASE_URL` is not set, the code defaults to `postgresql+asyncpg://postgre
 
 ## Running Locally
 
-After correcting the router filename/import mismatch and configuring PostgreSQL:
+After configuring PostgreSQL:
 
 ```powershell
 python -m uvicorn main:app --reload
@@ -298,7 +296,7 @@ Render FastAPI service
 PostgreSQL database
 ```
 
-Deploy the FastAPI application with an ASGI start command such as `uvicorn main:app --host 0.0.0.0 --port $PORT`, provide a reachable PostgreSQL instance, and configure `DATABASE_URL` in the hosting platform. The router filename/import mismatch must be resolved before deployment. No deployment is included in this repository.
+Deploy the FastAPI application with an ASGI start command such as `uvicorn main:app --host 0.0.0.0 --port $PORT`, provide a reachable PostgreSQL instance, and configure `DATABASE_URL` in the hosting platform. No deployment is included in this repository.
 
 ## Live Demo
 
@@ -342,9 +340,6 @@ The global handlers return a consistent `{"data": null, "error": "..."}` shape f
 
 ## Known Limitations
 
-- The checked-in router filename does not match the import in `main.py`, so the application cannot start until that mismatch is corrected.
-- There is no dependency lockfile or requirements file.
-- The configured `/dashboard` mount points to a missing `frontend/` directory.
 - Voice provider, phone-number, LLM, prompt, transcript, and call-recovery configuration are external and not included.
 - Duplicate detection is not implemented.
 - There is no authentication or authorization.
@@ -363,7 +358,7 @@ The global handlers return a consistent `{"data": null, "error": "..."}` shape f
 
 ## Testing
 
-No automated tests are included in the repository. Python compilation checks pass, but importing `main` currently fails because `main.py` imports `routers.patients` while the file is named `routers/pateints.py`.
+No automated tests are included in the repository. Python compilation checks pass.
 
 ## Future Improvements
 
